@@ -1,0 +1,24 @@
+# Dependencies
+node_modules/
+
+# Capacitor generated (regenerated tiap `cap add android`/`cap sync`)
+android/app/build/
+android/build/
+android/.gradle/
+android/local.properties
+android/captures/
+android/app/release/
+
+# Keystore - JANGAN PERNAH commit file ini ke git
+*.keystore
+*.jks
+android/app/release.keystore
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS / editor
+.DS_Store
+.vscode/
+*.swp

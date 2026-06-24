@@ -1,0 +1,26 @@
+{
+  "appId": "com.rianfo.familykas",
+  "appName": "FamilyKas",
+  "webDir": "www",
+  "server": {
+    "url": "https://familykas.vercel.app",
+    "androidScheme": "https",
+    "cleartext": false
+  },
+  "android": {
+    "allowMixedContent": false
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 1500,
+      "backgroundColor": "#dc2626",
+      "androidSplashResourceName": "splash",
+      "showSpinner": true,
+      "spinnerColor": "#ffffff"
+    },
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#dc2626"
+    }
+  }
+}
