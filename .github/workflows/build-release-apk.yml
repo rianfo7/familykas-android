@@ -37,6 +37,24 @@ jobs:
         run: |
           echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > android/app/release.keystore
 
+      - name: Debug - verify keystore credentials (safe, no secrets leaked)
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          echo "Length of ANDROID_KEYSTORE_PASSWORD: ${#KEYSTORE_PASSWORD}"
+          echo "Length of ANDROID_KEY_ALIAS: ${#KEY_ALIAS}"
+          echo "Length of ANDROID_KEY_PASSWORD: ${#KEY_PASSWORD}"
+          echo "ANDROID_KEY_ALIAS value (alias is not secret): [$KEY_ALIAS]"
+          echo "Passwords match: $([ "$KEYSTORE_PASSWORD" = "$KEY_PASSWORD" ] && echo yes || echo no)"
+          echo "--- Attempting keytool -list with these credentials ---"
+          keytool -list -keystore android/app/release.keystore \
+            -storepass "$KEYSTORE_PASSWORD" \
+            -alias "$KEY_ALIAS" \
+            && echo "SUCCESS: alias found and readable with given storepass" \
+            || echo "FAILED: see error above"
+
       - name: Build signed release APK
         env:
           KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
